@@ -1,7 +1,7 @@
 #ifndef _twazlr_bdb_h_
 #define _twazlr_bdb_h_
 
-#include <Common.h>
+#include <Common/Common.h>
 
 using namespace std;
 
@@ -26,7 +26,6 @@ namespace Twazlr {
 		void Lock();
     void Unlock();
     
-    virtual bool Keys(const string& prefix);
 		virtual bool Get(const string& key, string& result);	
     virtual bool Get(const string& key, vector<string>& results);
 		virtual bool Put(const string& key, const string& value);
