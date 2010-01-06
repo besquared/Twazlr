@@ -26,11 +26,8 @@ namespace Twazlr {
 		void Lock();
     void Unlock();
     
-		virtual bool Get(const string& key, string& result);	
-    virtual bool Get(const string& key, vector<string>& results);
-		virtual bool Put(const string& key, const string& value);
-		virtual bool PutDup(const string& key, const string& value);
-		virtual bool Add(const string& key, const int value, int& result);
+		virtual bool Put(const string& key, const double value);
+		virtual bool PutDup(const string& key, const double value);
 		virtual bool Out(const string& key);
     virtual int Count(const string& key);
     

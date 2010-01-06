@@ -66,54 +66,12 @@ void Twazlr::BDB::Unlock() {
   pthread_mutex_unlock(&this->mutex);
 }
 
-bool BDB::Get(const string& key, string& result) {
-	int b_size;
-	void* buffer;
-	
-	buffer = tcbdbget(this->database, key.c_str(), key.size(), &b_size);
-	
-	if(buffer == NULL) {
-		return false;
-	} else {
-		result.assign((char*)buffer, b_size);
-		free(buffer);
-		return true;
-	}
+bool BDB::Put(const string& key, const double value) {
+	return tcbdbput(this->database, key.c_str(), key.size(), &value, sizeof(double));
 }
 
-bool BDB::Get(const string& key, vector<string>& results) {
-	TCLIST* values = tcbdbget4(this->database, key.c_str(), key.size());
-	
-	if(values != NULL) {
-		const char* value;
-		size_t list_size = tclistnum(values);
-    for(size_t i = 0; i < list_size; i++) {
-			value = tclistval2(values, i);
-			if(value != NULL) { results.push_back(value); }
-    }
-    tclistdel(values);
-		return true;
-  } else {
-		return false;
-	}
-}
-
-bool BDB::Put(const string& key, const string& value) {
-	return tcbdbput(this->database, key.c_str(), key.size(), value.c_str(), value.size());
-}
-
-bool BDB::PutDup(const string& key, const string& value) {
-	return tcbdbputdup(this->database, key.c_str(), key.size(), value.c_str(), value.size());
-}
-
-bool BDB::Add(const string& key, const int value, int& result) {
-	result = tcbdbaddint(this->database, key.c_str(), key.length(), value);
-	
-	if(isnan(result)) {
-		return false;
-	} else {
-		return true;
-	}
+bool BDB::PutDup(const string& key, const double value) {
+	return tcbdbputdup(this->database, key.c_str(), key.size(), &value, sizeof(double));
 }
 
 bool BDB::Out(const string& key) {
